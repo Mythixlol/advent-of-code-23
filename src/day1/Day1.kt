@@ -1,14 +1,16 @@
 package day1
 
-class Day1(val input: List<String>) {
+class Day1 {
+
+    private var input: List<String> = Util.readFileAsLinesUsingUseLines("./src/${javaClass.simpleName}/input")
 
     companion object {
 
-        val testDay1 = listOf(
+        private val testPart1 = listOf(
             "1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet"
         )
 
-        val testDay2 = listOf(
+        private val testPart2 = listOf(
             " two1nine",
             "eightwothree",
             "abcone2threexyz",
@@ -18,21 +20,18 @@ class Day1(val input: List<String>) {
             "7pqrstsixteen"
         )
 
-        val numbersList = listOf("one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
-
-        fun run() {
-            val input = Util.readFileAsLinesUsingUseLines("./src/day1/input")
-            val day = Day1(input)
-
-            day.part1()
-            day.part2()
-        }
+        private val numbersList = listOf("one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
     }
 
-    fun part1() {
+    init {
+        part1()
+        part2()
+    }
+
+    private fun part1() {
 
         val expected = 142
-        val testResult = testDay1.sumOf { parseWordForNumbers(it) }
+        val testResult = testPart1.sumOf { parseWordForNumbers(it) }
         if (testResult != expected) {
             println("Test Day1 failed with result: $testResult")
             return
@@ -60,10 +59,10 @@ class Day1(val input: List<String>) {
     }
 
 
-    fun part2() {
+    private fun part2() {
 
         val expected = 281
-        val testResult = convertWords(testDay2).sumOf { parseWordForNumbers(it) }
+        val testResult = convertWords(testPart2).sumOf { parseWordForNumbers(it) }
         if (testResult != expected) {
             println("Test Day2 failed with result: $testResult")
             return
@@ -84,9 +83,8 @@ class Day1(val input: List<String>) {
         val indexList: ArrayList<Pair<Int, Int>> = ArrayList()
 
         numbersList.asSequence().forEach { number ->
-            val list = generateSequence(word.indexOf(number)) { word.indexOf(number, it + 1) }
-                .takeWhile { it >= 0 }
-                .toList()
+            val list =
+                generateSequence(word.indexOf(number)) { word.indexOf(number, it + 1) }.takeWhile { it >= 0 }.toList()
 
             list.forEach { index -> indexList.add(Pair(index, numbersList.indexOf(number) + 1)) }
         }
