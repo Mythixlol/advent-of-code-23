@@ -15,6 +15,7 @@ class Day2() {
         )
     }
 
+    private val colors = listOf("green", "red", "blue")
 
     init {
         part1()
@@ -24,30 +25,89 @@ class Day2() {
     private fun part1() {
 
         val expected = 8
-        val testResult = testPart1.sumOf { isValidGameAndGetId(it) }
+        val testResult = testPart1.sumOf { getIdOfValidGame(it) }
         if (testResult != expected) {
-            println("Test Day1 failed with result: $testResult")
+            println("Test Day2 Part 1 failed with result: $testResult")
             return
         }
 
-        val result = input.sumOf { isValidGameAndGetId(it) }
-        println("Day1 part1: $result")
+        val result = input.sumOf { getIdOfValidGame(it) }
+        println("Day2 part1: $result")
     }
 
 
-    private fun isValidGameAndGetId(game: String): Int {
+    data class Game(
+        var id: Int, var red: Int, var green: Int, var blue: Int, var isValidGame: Boolean
+    )
+
+    data object MaxColorValues {
+        const val GREEN = 13
+        const val RED = 12
+        const val BLUE = 14
+    }
+
+
+    private fun getIdOfValidGame(game: String): Int {
+
+        val resultList = parseGames(game)
+
+        if (resultList.maxOf { it.green } <= MaxColorValues.GREEN && resultList.maxOf { it.red } <= MaxColorValues.RED && resultList.maxOf { it.blue } <= MaxColorValues.BLUE)
+            return resultList.first().id
+        return 0
+
+    }
+
+    private fun parseGames(game: String): List<Game> {
 
         val gameId = game.substring(game.indexOf(" ") + 1, game.indexOf(":")).toInt()
 
         val games = game.substring(game.indexOf(":") + 1).split(";")
 
-        return gameId
+        val resultList = games.map { singleGame ->
+            getSingleGameFromString(singleGame, gameId)
+        }
+
+        return resultList
     }
 
 
+    private fun getSingleGameFromString(input: String, gameId: Int): Game {
+
+        var green = 0
+        var red = 0
+        var blue = 0
+
+        input.split(",").forEach { color ->
+
+            val trimmed = color.trim()
+            val index = colors.indexOfFirst { trimmed.contains(it) }
+            val count = trimmed.substring(0, trimmed.indexOf(" ")).toInt()
+
+            when (index) {
+                0 -> green += count
+                1 -> red += count
+                2 -> blue += count
+            }
+        }
+
+        return Game(red = red, green = green, blue = blue, id = gameId, isValidGame = false)
+    }
+
     private fun part2() {
 
+        val expected = 2286
+        val testResult = testPart1.sumOf { calculatePowerOfMinMax(parseGames(it)) }
+        if (testResult != expected) {
+            println("Test Day2 Part 2 failed with result: $testResult")
+            return
+        }
 
+        val result = input.sumOf { calculatePowerOfMinMax(parseGames(it)) }
+        println("Day2 part2: $result")
+    }
+
+    private fun calculatePowerOfMinMax(games: List<Game>): Int {
+        return games.maxOf { it.green } * games.maxOf { it.red } * games.maxOf { it.blue }
     }
 
 }
