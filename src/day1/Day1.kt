@@ -93,7 +93,7 @@ class Day1(val input: List<String>) {
 
         var newWord = word
 
-        indexList.sortedBy { it.first }.reversed().forEach { indexPair ->
+        indexList.sortedByDescending { it.first }.forEach { indexPair ->
             val index = indexPair.first
             val replace = indexPair.second
             newWord = newWord.substring(0, index) + replace + newWord.substring(index + 1)
