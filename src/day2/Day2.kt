@@ -1,6 +1,6 @@
 package day2
 
-class Day2() {
+class Day2 {
 
     private var input: List<String> = Util.readFileLineByLine("./src/${javaClass.simpleName}/input")
 
@@ -27,12 +27,12 @@ class Day2() {
         val expected = 8
         val testResult = testPart1.sumOf { getIdOfValidGame(it) }
         if (testResult != expected) {
-            println("Test Day2 Part 1 failed with result: $testResult")
+            println("Test ${javaClass.simpleName} Part 1 failed with result: $testResult")
             return
         }
 
         val result = input.sumOf { getIdOfValidGame(it) }
-        println("Day2 part1: $result")
+        println("${javaClass.simpleName} Part 1: $result")
     }
 
 
@@ -51,8 +51,7 @@ class Day2() {
 
         val resultList = parseGames(game)
 
-        if (resultList.maxOf { it.green } <= MaxColorValues.GREEN && resultList.maxOf { it.red } <= MaxColorValues.RED && resultList.maxOf { it.blue } <= MaxColorValues.BLUE)
-            return resultList.first().id
+        if (resultList.maxOf { it.green } <= MaxColorValues.GREEN && resultList.maxOf { it.red } <= MaxColorValues.RED && resultList.maxOf { it.blue } <= MaxColorValues.BLUE) return resultList.first().id
         return 0
 
     }
@@ -98,12 +97,12 @@ class Day2() {
         val expected = 2286
         val testResult = testPart1.sumOf { calculatePowerOfMinMax(parseGames(it)) }
         if (testResult != expected) {
-            println("Test Day2 Part 2 failed with result: $testResult")
+            println("Test ${javaClass.simpleName} Part 2 failed with result: $testResult")
             return
         }
 
         val result = input.sumOf { calculatePowerOfMinMax(parseGames(it)) }
-        println("Day2 part2: $result")
+        println("${javaClass.simpleName} Part 2: $result")
     }
 
     private fun calculatePowerOfMinMax(games: List<Game>): Int {
@@ -111,3 +110,4 @@ class Day2() {
     }
 
 }
+

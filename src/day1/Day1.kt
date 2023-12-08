@@ -33,12 +33,12 @@ class Day1 {
         val expected = 142
         val testResult = testPart1.sumOf { parseWordForNumbers(it) }
         if (testResult != expected) {
-            println("Test Day1 failed with result: $testResult")
+            println("${javaClass.simpleName} failed with result: $testResult")
             return
         }
 
         val result = input.sumOf { parseWordForNumbers(it) }
-        println("Day1 part1: $result")
+        println("${javaClass.simpleName} Part 1: $result")
     }
 
     private fun parseWordForNumbers(inputString: String): Int {
@@ -64,13 +64,13 @@ class Day1 {
         val expected = 281
         val testResult = convertWords(testPart2).sumOf { parseWordForNumbers(it) }
         if (testResult != expected) {
-            println("Test Day2 failed with result: $testResult")
+            println("Test ${javaClass.simpleName} failed with result: $testResult")
             return
         }
 
 
         val result = convertWords(input).sumOf { parseWordForNumbers(it) }
-        println("Day1 part2: $result")
+        println("${javaClass.simpleName} Part 2: $result")
 
     }
 
