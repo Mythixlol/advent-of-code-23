@@ -2,7 +2,7 @@ package day1
 
 class Day1 {
 
-    private var input: List<String> = Util.readFileAsLinesUsingUseLines("./src/${javaClass.simpleName}/input")
+    private var input: List<String> = Util.readFileLineByLine("./src/${javaClass.simpleName}/input")
 
     companion object {
 
